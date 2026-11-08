@@ -1,0 +1,815 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* =====================================================================
+   CREATORS DA AMAZÔNIA — Sistema de Design
+   Família visual da Ousadia Marketing (Chakra Petch + Manrope + JetBrains
+   Mono, amarelo #ffc61a como cor de ação, rótulos mono em caixa-alta), com
+   identidade própria: fundos claros em marfim e em quatro tons de seção
+   (roxo, azul, verde e marrom), com azul-rio, verde-mata e amarelo de ação.
+   Tema claro é o único tema do site. Os nomes `ink-*` foram mantidos por
+   compatibilidade, mas hoje são os tons claros de fundo e superfície.
+===================================================================== */
+
+@theme inline {
+  /* Tipografia */
+  --font-sans: var(--font-manrope);
+  --font-display: var(--font-chakra);
+  --font-heading: var(--font-chakra);
+  --font-mono: var(--font-jetbrains);
+
+  /* Escala de marca (bg-ink, text-amarelo, border-floresta/40, ...) */
+  --color-ink-void: var(--ink-void);
+  --color-ink-deep: var(--ink-deep);
+  --color-ink: var(--ink);
+  --color-verde: var(--verde);
+  --color-floresta: var(--floresta);
+  --color-rio: var(--rio);
+  --color-rio-soft: var(--rio-soft);
+  --color-amarelo: var(--amarelo);
+  --color-amarelo-soft: var(--amarelo-soft);
+  --color-marfim: var(--marfim);
+  --color-ouro: var(--ouro);
+
+  /* Mapeamento semântico shadcn */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  color-scheme: light;
+
+  /* ---- Paleta bruta ---- */
+  --ink-void: #f1e9da; /* fundo claro mais marcado (faixas, rodapé) */
+  --ink-deep: #fbf6ec; /* fundo base: marfim claro */
+  --ink: #fffdf8; /* superfície elevada (cartões) */
+  --verde: #176d49; /* verde da mata */
+  --floresta: #3fd08f; /* verde vivo: preenchimentos e selos */
+  --rio: #18a5c9; /* azul-rio: preenchimentos */
+  --rio-soft: #58d3ec;
+  --amarelo: #ffc61a; /* amarelo Ousadia — cor de ação (preenchimento) */
+  --amarelo-soft: #ffdd66;
+  --marfim: #fff1d6;
+  --ouro: #8a5a00; /* amarelo legível como texto sobre fundo claro */
+  --floresta-texto: #0d7a4f; /* verde legível como texto */
+  --rio-texto: #0b6f8f; /* azul legível como texto */
+
+  /* ---- Tons de seção (fundo, cartão, destaque) ---- */
+  --roxo-bg: #e3d8f6;
+  --roxo-card: #f8f5fd;
+  --roxo-deep: #53318f;
+  --azul-bg: #d0eaf5;
+  --azul-card: #f2fafd;
+  --azul-deep: #0b6f8f;
+  --verde-bg: #d0edda;
+  --verde-card: #f2fbf6;
+  --verde-deep: #17704a;
+  --marrom-bg: #ecd7c1;
+  --marrom-card: #fbf6ef;
+  --marrom-deep: #7a4e2d;
+
+  --noite-bg: #241044; /* roxo profundo da Ousadia */
+  --noite-card: #32155c;
+
+  /* ---- Semântico ---- */
+  --background: var(--ink-deep);
+  --foreground: #2a2623;
+  --card: var(--ink);
+  --card-foreground: #2a2623;
+  --popover: #fffdf8;
+  --popover-foreground: #2a2623;
+  --primary: var(--amarelo);
+  --primary-foreground: #1a1405;
+  --secondary: #efe6d6;
+  --secondary-foreground: #2a2623;
+  --muted: #f1e9da;
+  --muted-foreground: #5f5850;
+  --accent: #efe6d6;
+  --accent-foreground: #2a2623;
+  --destructive: #c0392b;
+  --border: rgba(42, 38, 35, 0.14);
+  --input: rgba(42, 38, 35, 0.22);
+  --ring: #c99200;
+  --chart-1: #3fd08f;
+  --chart-2: #18a5c9;
+  --chart-3: #ffc61a;
+  --chart-4: #176d49;
+  --chart-5: #58d3ec;
+  --radius: 0.75rem;
+  --sidebar: var(--ink);
+  --sidebar-foreground: #2a2623;
+  --sidebar-primary: var(--amarelo);
+  --sidebar-primary-foreground: #1a1405;
+  --sidebar-accent: #efe6d6;
+  --sidebar-accent-foreground: #2a2623;
+  --sidebar-border: var(--border);
+  --sidebar-ring: #c99200;
+}
+
+/* O tema é um só (claro). A classe .dark segue no <html> só para o shadcn não
+   quebrar, e por isso aqui ela não muda nenhuma cor. */
+.dark {
+  color-scheme: light;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  /* Âncoras (/#como-funciona etc.) param abaixo do cabeçalho fixo. */
+  [id] {
+    scroll-margin-top: 5.5rem;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  ::selection {
+    background: var(--amarelo);
+    color: #1a1405;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  @media print {
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+  }
+}
+
+@layer components {
+  /* ---- Tipografia utilitária ---- */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--tone-deep, var(--ouro));
+  }
+  .headline-hero {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.1rem, 6.4vw, 4.75rem);
+    line-height: 1.02;
+  }
+  .headline-section {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.75rem, 4vw, 2.9rem);
+  }
+  .text-lead {
+    color: var(--muted-foreground);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+
+  /* ---- Layout ---- */
+  .container-site {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2rem;
+    }
+  }
+  .section-padding {
+    padding-block: clamp(3.5rem, 8vw, 6.5rem);
+  }
+
+  /* ---- Superfícies ---- */
+  .surface {
+    background: color-mix(in oklab, var(--ink) 88%, transparent);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    backdrop-filter: blur(8px);
+  }
+  .surface-glow {
+    box-shadow:
+      0 30px 70px -40px rgba(42, 38, 35, 0.28),
+      0 0 60px -34px var(--tone-deep, #17704a);
+  }
+  .surface-hover {
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .surface-hover:hover {
+    transform: translateY(-3px);
+    border-color: var(--tone-deep, #c99200);
+    box-shadow: 0 18px 44px -24px var(--tone-deep, #c99200);
+  }
+
+  /* ---- Seções em tons claros ----
+     Cada seção recebe uma destas classes. Elas trocam o fundo e também as
+     variáveis de cartão/borda/destaque, então `.surface`, `.eyebrow` e os
+     cartões de dentro acompanham o tom sem classes extras.
+     Alternar na ordem roxo, azul, verde, marrom. */
+  .tone-roxo,
+  .tone-azul,
+  .tone-verde,
+  .tone-marrom,
+  .tone-marfim {
+    position: relative;
+    isolation: isolate;
+    background: var(--tone-bg);
+    --ink: var(--tone-card);
+    --border: color-mix(in oklab, var(--tone-deep) 22%, transparent);
+    --muted-foreground: color-mix(in oklab, var(--tone-deep) 38%, #2a2623);
+  }
+  .tone-roxo {
+    --tone-bg: var(--roxo-bg);
+    --tone-card: var(--roxo-card);
+    --tone-deep: var(--roxo-deep);
+  }
+  .tone-azul {
+    --tone-bg: var(--azul-bg);
+    --tone-card: var(--azul-card);
+    --tone-deep: var(--azul-deep);
+  }
+  .tone-verde {
+    --tone-bg: var(--verde-bg);
+    --tone-card: var(--verde-card);
+    --tone-deep: var(--verde-deep);
+  }
+  .tone-marrom {
+    --tone-bg: var(--marrom-bg);
+    --tone-card: var(--marrom-card);
+    --tone-deep: var(--marrom-deep);
+  }
+  /* Seção neutra (marfim): respiro entre os blocos coloridos. */
+  .tone-marfim {
+    --tone-bg: var(--ink-deep);
+    --tone-card: #fffdf8;
+    --tone-deep: var(--ouro);
+  }
+  .tone-roxo .btn-cta-outline:hover,
+  .tone-azul .btn-cta-outline:hover,
+  .tone-verde .btn-cta-outline:hover,
+  .tone-marrom .btn-cta-outline:hover,
+  .tone-marfim .btn-cta-outline:hover {
+    border-color: var(--tone-deep);
+    color: var(--tone-deep);
+  }
+
+
+  /* ---- Bloco escuro de contraste (roxo-noite) ----
+     Usado em poucos pontos da página para quebrar o ritmo das seções claras.
+     Redefine as variáveis de texto, então tudo de dentro acompanha. */
+  .tone-noite {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(40rem 26rem at 90% -10%, var(--noite-glow-a, rgba(139, 92, 246, 0.38)), transparent 60%),
+      radial-gradient(34rem 24rem at 0% 110%, var(--noite-glow-b, rgba(24, 165, 201, 0.22)), transparent 60%),
+      var(--noite-bg);
+    color: #f4efe6;
+    --foreground: #f4efe6;
+    --muted-foreground: #c4bbdc;
+    --ink: var(--noite-card);
+    --border: rgba(244, 239, 230, 0.16);
+    --tone-deep: var(--amarelo);
+  }
+  /* Variações do bloco escuro: junto com .tone-noite, só trocam as cores. */
+  .noite-azul {
+    --noite-bg: #08303f;
+    --noite-card: #0f4257;
+    --noite-glow-a: rgba(88, 211, 236, 0.28);
+    --noite-glow-b: rgba(139, 92, 246, 0.2);
+  }
+  .noite-marrom {
+    --noite-bg: #2b1d14;
+    --noite-card: #3b281b;
+    --noite-glow-a: rgba(255, 198, 26, 0.18);
+    --noite-glow-b: rgba(139, 92, 246, 0.16);
+  }
+  .tone-noite .btn-cta-outline {
+    border-color: rgba(244, 239, 230, 0.4);
+    background: rgba(244, 239, 230, 0.06);
+  }
+  .tone-noite .btn-cta-outline:hover {
+    border-color: var(--amarelo);
+    color: var(--amarelo);
+  }
+
+  /* Malha de cor do hero: manchas grandes, em vez de grafismo apagado */
+  .hero-mesh {
+    background:
+      radial-gradient(38rem 28rem at 88% 8%, rgba(139, 92, 246, 0.45), transparent 62%),
+      radial-gradient(30rem 24rem at 4% 96%, rgba(24, 165, 201, 0.32), transparent 62%),
+      radial-gradient(22rem 18rem at 62% 100%, rgba(255, 198, 26, 0.3), transparent 65%),
+      var(--roxo-bg);
+  }
+
+  /* Faixa de logos que rola sozinha. A trilha tem o conteúdo duplicado: ao
+     chegar em -50% o laço fecha sem salto. */
+  .marquee {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    gap: clamp(2.5rem, 6vw, 4.5rem);
+    padding-right: clamp(2.5rem, 6vw, 4.5rem);
+    animation: marquee-roll 38s linear infinite;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee-roll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Cartões flutuando de leve no hero */
+  .float-y {
+    animation: float-y 6s ease-in-out infinite;
+  }
+  .float-y-slow {
+    animation: float-y 8s ease-in-out infinite reverse;
+  }
+  @keyframes float-y {
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Foto com zoom suave quando o cartão pai recebe hover */
+  .photo-zoom {
+    overflow: hidden;
+  }
+  .photo-zoom > img {
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .group:hover .photo-zoom > img {
+    transform: scale(1.06);
+  }
+
+  /* Brilho que cruza o botão de ação no hover */
+  .btn-cta-primary {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-cta-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
+    transform: translateX(-120%);
+    transition: transform 0.7s ease;
+    pointer-events: none;
+  }
+  .btn-cta-primary:hover::after {
+    transform: translateX(120%);
+  }
+
+  /* Entrada ao rolar, só com CSS (animation-timeline). Sem suporte, ou com
+     movimento reduzido, o conteúdo simplesmente aparece parado. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .reveal {
+        animation: reveal-in linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 45%;
+        animation-delay: var(--d, 0s);
+      }
+      @keyframes reveal-in {
+        from {
+          opacity: 0;
+          transform: translateY(1.75rem);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track,
+    .float-y,
+    .float-y-slow {
+      animation: none;
+    }
+    .marquee {
+      overflow-x: auto;
+    }
+  }
+
+  /* Barra de ação fixa no celular. Fica `sticky` no fim do <main>, então para
+     antes do rodapé sem cobri-lo. Com suporte a scroll-driven animations ela só
+     aparece depois que o hero (e os botões dele) sai da tela. */
+  .mobile-cta {
+    position: sticky;
+    bottom: 0;
+    z-index: 30;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .mobile-cta {
+        animation: mobile-cta-in linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 90vh;
+      }
+      @keyframes mobile-cta-in {
+        0%,
+        70% {
+          opacity: 0;
+          transform: translateY(100%);
+          visibility: hidden;
+        }
+        100% {
+          opacity: 1;
+          transform: none;
+          visibility: visible;
+        }
+      }
+    }
+  }
+
+  /* Texto claro dentro de um elemento escuro (ex.: tela do celular) numa seção
+     clara: troca as variáveis de texto sem mexer no fundo. */
+  .on-dark {
+    color: #f4efe6;
+    --foreground: #f4efe6;
+    --muted-foreground: #c4bbdc;
+  }
+
+  /* Barra de progresso do carrossel da comunidade (estilo stories). A duração
+     e o play/pause vêm inline do componente. */
+  .story-bar {
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+  @keyframes story-fill {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  /* Pergunta do FAQ: o "+" vira "×" quando abre. */
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq-item summary:focus-visible {
+    outline: 2px solid var(--tone-deep, var(--ring));
+    outline-offset: 4px;
+    border-radius: 0.5rem;
+  }
+
+  /* ---- Animações do "match" ---- */
+  /* Anel que se abre a partir do elemento, como um sinal na água. */
+  .pulse-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 2px solid var(--amarelo);
+    animation: pulse-ring 2.6s ease-out infinite;
+    animation-delay: var(--d, 0s);
+    pointer-events: none;
+  }
+  @keyframes pulse-ring {
+    from {
+      transform: scale(1);
+      opacity: 0.75;
+    }
+    to {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+  /* Notificação que entra, fica e sai, em laço. O atraso escalona a fila. */
+  .notif {
+    animation: notif-cycle 9s ease-in-out infinite;
+    animation-delay: var(--d, 0s);
+  }
+  @keyframes notif-cycle {
+    0% {
+      opacity: 0;
+      transform: translateY(16px) scale(0.96);
+    }
+    8%,
+    84% {
+      opacity: 1;
+      transform: none;
+    }
+    96%,
+    100% {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+  /* Raios girando devagar atrás do selo de match. */
+  .rays {
+    background: repeating-conic-gradient(rgba(255, 198, 26, 0.32) 0deg 5deg, transparent 5deg 20deg);
+    -webkit-mask-image: radial-gradient(circle, #000 18%, transparent 68%);
+    mask-image: radial-gradient(circle, #000 18%, transparent 68%);
+    animation: rays-spin 40s linear infinite;
+  }
+  @keyframes rays-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rays {
+      animation: none;
+    }
+  }
+
+  /* Painel de marca das telas de entrada: roxo claro com brilhos e malha */
+  .brand-panel {
+    position: relative;
+    isolation: isolate;
+    --tone-bg: var(--roxo-bg);
+    --tone-card: var(--roxo-card);
+    --tone-deep: var(--roxo-deep);
+    --ink: var(--roxo-card);
+    --muted-foreground: color-mix(in oklab, var(--roxo-deep) 38%, #2a2623);
+    background:
+      radial-gradient(46rem 30rem at 0% 0%, rgba(63, 208, 143, 0.2), transparent 62%),
+      radial-gradient(40rem 30rem at 100% 100%, rgba(24, 165, 201, 0.18), transparent 60%),
+      linear-gradient(rgba(42, 38, 35, 0.04) 1px, transparent 1px) 0 0 / 3rem 3rem,
+      linear-gradient(90deg, rgba(42, 38, 35, 0.04) 1px, transparent 1px) 0 0 / 3rem 3rem,
+      linear-gradient(160deg, #f1ebfb 0%, #ebe4f7 55%, #e2d8f3 100%);
+  }
+
+  /* ---- Botões de chamada (mesma linguagem da Ousadia) ---- */
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--radius);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .btn-cta:hover {
+    transform: translateY(-2px);
+  }
+  .btn-cta-primary {
+    background: var(--amarelo);
+    color: #1a1405;
+  }
+  .btn-cta-primary:hover {
+    box-shadow: 0 12px 30px -8px rgba(255, 198, 26, 0.6);
+  }
+  .btn-cta-outline {
+    border: 1px solid rgba(42, 38, 35, 0.3);
+    color: var(--foreground);
+    background: rgba(255, 255, 255, 0.45);
+  }
+  .btn-cta-outline:hover {
+    border-color: var(--verde);
+    color: var(--verde);
+  }
+
+  /* Seletor de papel (cadastro): cartões selecionáveis */
+  .role-card {
+    border: 1px solid var(--border);
+    border-radius: 0.9rem;
+    background: rgba(255, 255, 255, 0.5);
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .role-card:hover {
+    border-color: #c99200;
+    transform: translateY(-2px);
+  }
+  .role-card[aria-checked="true"] {
+    border-color: #c99200;
+    background: rgba(255, 198, 26, 0.18);
+    box-shadow: 0 0 36px -16px rgba(201, 146, 0, 0.6);
+  }
+
+  /* Marcador em losango (ícones de categoria, passos, destaques) */
+  .diamond {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    flex-shrink: 0;
+  }
+  .diamond::before {
+    content: "";
+    position: absolute;
+    inset: 0.35rem;
+    transform: rotate(45deg);
+    border-radius: 0.4rem;
+    border: 1.5px solid currentColor;
+    background: color-mix(in oklab, currentColor 12%, transparent);
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+  .diamond > * {
+    position: relative;
+  }
+  .group:hover .diamond::before {
+    background: color-mix(in oklab, currentColor 24%, transparent);
+    transform: rotate(45deg) scale(1.06);
+  }
+  .diamond-solid::before {
+    background: currentColor;
+    border-color: currentColor;
+  }
+  .group:hover .diamond-solid::before {
+    background: currentColor;
+  }
+
+  /* Rio animado: tracejado que desce devagar, como água */
+  .rio-corrente {
+    stroke-dasharray: 6 10;
+    animation: rio-corre 3.2s linear infinite;
+  }
+  @keyframes rio-corre {
+    to {
+      stroke-dashoffset: -32;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rio-corrente {
+      animation: none;
+    }
+  }
+
+  /* ---- Grafismos (components/brand/kene.tsx) ----
+     A figura entra como `mask-image` e a cor vem de `background-color:
+     currentColor`: dá para tingir com `text-amarelo` / `text-rio` e o motivo
+     repete sozinho. O @supports no fim evita um retângulo chapado se o
+     navegador não tiver suporte a máscara. */
+  .kene {
+    background-color: currentColor;
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+  .kene-x {
+    display: block;
+    width: 100%;
+    -webkit-mask-repeat: repeat-x;
+    mask-repeat: repeat-x;
+    -webkit-mask-size: auto 100%;
+    mask-size: auto 100%;
+  }
+  .kene-tile {
+    -webkit-mask-repeat: repeat;
+    mask-repeat: repeat;
+    -webkit-mask-position: top left;
+    mask-position: top left;
+  }
+  .kene-one {
+    display: inline-block;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+  }
+  .kene-divider {
+    width: 100%;
+    padding-block: clamp(1.25rem, 3vw, 2.25rem);
+  }
+  .kene-fade {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+  }
+  @supports not ((-webkit-mask-image: none) or (mask-image: none)) {
+    .kene {
+      background-color: transparent;
+    }
+  }
+}
+
+/* O menu nativo (<select>) precisa de fundo próprio para ficar legível. */
+select option {
+  background: #fffdf8;
+  color: #2a2623;
+}
+
+/* Marca de seleção dos checkboxes/rádios nativos */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--verde);
+}
+
+/* ---- Texto de destaque legível em fundo claro ----
+   `amarelo`, `floresta` e `rio` seguem vivos para preenchimentos, selos e
+   bordas (sempre com texto escuro por cima). Quando a cor é usada como TEXTO,
+   trocamos pelo tom profundo, que passa em contraste sobre fundo claro. Fica
+   fora de @layer de propósito, para vencer as utilitárias. */
+.text-amarelo {
+  color: var(--ouro);
+}
+.text-floresta,
+.hover\:text-floresta:hover {
+  color: var(--floresta-texto);
+}
+.text-rio {
+  color: var(--rio-texto);
+}
+.diamond-solid.text-amarelo {
+  color: var(--amarelo);
+}
+
+/* Dentro do bloco escuro o amarelo volta a ser o vivo (o âmbar escuro é só
+   para fundo claro). */
+.tone-noite .text-amarelo,
+.tone-noite .eyebrow {
+  color: var(--amarelo);
+}
+.tone-noite .text-floresta {
+  color: var(--floresta);
+}
+.tone-noite .text-rio {
+  color: var(--rio-soft);
+}
+.on-dark .text-floresta {
+  color: var(--floresta);
+}
+.on-dark .text-amarelo {
+  color: var(--amarelo);
+}
