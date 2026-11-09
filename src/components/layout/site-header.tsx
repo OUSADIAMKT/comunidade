@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Menu } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
+import { OusadiaLogo } from "@/components/brand/ousadia-logo";
 import { KeneRule } from "@/components/brand/kene";
 
 /** Âncoras da home: aparecem a partir de lg, quando há espaço. */
@@ -20,7 +21,11 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 bg-ink-deep/85 backdrop-blur-md print:hidden">
       <div className="container-site flex items-center justify-between gap-3 py-3">
-        <Logo compact size={34} />
+        <div className="flex items-center gap-3">
+          <OusadiaLogo className="h-6 sm:h-7" />
+          <span className="h-6 w-px bg-border" aria-hidden="true" />
+          <Logo compact size={34} />
+        </div>
 
         <nav aria-label="Principal" className="hidden items-center gap-0.5 sm:flex">
           {ANCHORS.map((l) => (

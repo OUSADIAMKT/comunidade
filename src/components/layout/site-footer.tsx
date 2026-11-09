@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/logo";
+import { OusadiaLogo } from "@/components/brand/ousadia-logo";
 import { SectionDivider } from "@/components/brand/kene";
 
 const COLUMNS = [
@@ -29,6 +30,7 @@ export function SiteFooter() {
       <div className="container-site grid gap-10 pb-12 pt-4 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
         <div className="space-y-4 sm:col-span-2 lg:col-span-1">
           <Logo />
+          <OusadiaLogo className="h-8" />
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
             O marketplace que conecta empresas a creators, social medias e especialistas em IA da Amazônia.
           </p>
