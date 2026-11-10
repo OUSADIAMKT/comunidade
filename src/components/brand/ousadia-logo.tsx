@@ -1,30 +1,21 @@
-import Image from "next/image";
-
 /**
- * Símbolo oficial da Ousadia Marketing, levando à home do site principal.
- * Por padrão a Ousadia fica sempre à ESQUERDA, antes da logo da Creators.
- *  - tom="escuro": para fundo escuro (anel creme + triângulo amarelo). Padrão.
- *  - tom="claro": para fundo claro (anel roxo + triângulo amarelo).
+ * Símbolo minimalista da Ousadia Marketing (fundo escuro), levando à home do
+ * site principal. Fica sempre à ESQUERDA, antes da logo da Creators.
  */
-export function OusadiaLogo({
-  className = "h-8",
-  tom = "escuro",
-}: {
-  className?: string;
-  tom?: "escuro" | "claro";
-}) {
+export function OusadiaLogo({ className = "h-8" }: { className?: string }) {
   return (
     <a
       href="https://ousadiamarketing.com.br"
       aria-label="Ousadia Marketing, página inicial"
       className="inline-flex shrink-0 items-center"
     >
-      <Image
-        src={`/img/marcas/ousadia-simbolo-${tom}.png`}
+      {/* SVG: <img> direto, sem o otimizador do next/image */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/img/marcas/ousadia-minimalista-escuro.svg"
         alt="Ousadia Marketing"
-        width={542}
-        height={467}
-        sizes="64px"
+        width={884}
+        height={774}
         className={`w-auto object-contain ${className}`}
       />
     </a>
