@@ -19,7 +19,7 @@ const LINK_CLASS =
 /** Cabeçalho do site público. O menu móvel usa <details>: funciona sem JavaScript. */
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 bg-ink-deep/85 backdrop-blur-md print:hidden">
+    <header className="sticky top-0 z-40 bg-[#1d0c39] text-[#f4efe6] [--border:rgba(244,239,230,0.16)] [--foreground:#f4efe6] [--muted-foreground:#c4bbdc] print:hidden">
       <div className="container-site flex items-center justify-between gap-3 py-3">
         <div className="flex items-center gap-3">
           <OusadiaLogo className="h-8 sm:h-9" />
@@ -54,7 +54,7 @@ export function SiteHeader() {
           >
             <Menu className="size-5" aria-hidden="true" />
           </summary>
-          <div className="surface absolute right-0 mt-2 flex w-64 flex-col gap-1 p-2 shadow-xl">
+          <div className="surface absolute right-0 mt-2 flex w-64 flex-col gap-1 p-2 text-[#2a2623] shadow-xl [--border:rgba(42,38,35,0.12)] [--foreground:#2a2623] [--muted-foreground:#5f5850]">
             {[...ANCHORS, ...LINKS, { href: "/servicos", label: "Serviços" }].map((l) => (
               <Link key={l.href} href={l.href} className="rounded-lg px-3 py-2.5 text-sm hover:bg-foreground/5">
                 {l.label}
