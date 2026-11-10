@@ -29,8 +29,11 @@ export function SiteFooter() {
       <SectionDivider motif="iso" height={22} opacity={0.35} className="text-[color:var(--tone-deep)]" />
       <div className="container-site grid gap-10 pb-12 pt-4 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
         <div className="space-y-4 sm:col-span-2 lg:col-span-1">
-          <Logo />
-          <OusadiaLogo className="h-8" />
+          <div className="flex items-center gap-4">
+            <OusadiaLogo className="h-11" />
+            <span className="h-9 w-px bg-border" aria-hidden="true" />
+            <Logo />
+          </div>
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
             O marketplace que conecta empresas a creators, social medias e especialistas em IA da Amazônia.
           </p>

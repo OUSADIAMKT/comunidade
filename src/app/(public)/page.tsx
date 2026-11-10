@@ -22,6 +22,7 @@ import { TerritoriosMap } from "@/components/brand/territorios-map";
 import { SectionHeading } from "@/components/brand/section-heading";
 import { CategoryBadge } from "@/components/brand/category-icon";
 import { TalentCard } from "@/components/public/talent-card";
+import { EcossistemaLosango } from "@/components/public/ecossistema-losango";
 import { MIN_SCORE_TO_PUBLISH, formatBRL } from "@/lib/constants";
 
 /* Destinos de cadastro: cada público entra com o tipo de conta já marcado. */
@@ -608,6 +609,21 @@ export default async function Home() {
           </ol>
         </div>
       </section>
+
+      {/* ---------- ECOSSISTEMA ---------- */}
+      <EcossistemaLosango
+        fotos={{
+          agencia: "/img/fotos/equipe-evento.webp",
+          escola: "/img/comunidade/turma-certificados.webp",
+          comunidade: "/img/comunidade/encontro-criadores.webp",
+        }}
+        links={{
+          agencia: "https://ousadiamarketing.com.br/agencia",
+          escola: "https://ousadiamarketing.com.br/escola",
+          comunidade: SIGNUP_TALENTO,
+        }}
+        externos={{ agencia: true, escola: true }}
+      />
 
       {/* ---------- FAQ ---------- */}
       <section id="duvidas" className="tone-noite noite-marrom relative overflow-hidden" aria-label="Perguntas frequentes">

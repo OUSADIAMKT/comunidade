@@ -22,7 +22,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 bg-ink-deep/85 backdrop-blur-md print:hidden">
       <div className="container-site flex items-center justify-between gap-3 py-3">
         <div className="flex items-center gap-3">
-          <OusadiaLogo className="h-6 sm:h-7" />
+          <OusadiaLogo className="h-8 sm:h-9" />
           <span className="h-6 w-px bg-border" aria-hidden="true" />
           <Logo compact size={34} />
         </div>
