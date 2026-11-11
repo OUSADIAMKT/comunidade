@@ -6,9 +6,9 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 /**
- * Ecossistema em losango concêntrico (opção 5): Agência no centro, Escola ao
- * redor e Comunidade por fora. As abas (ou o clique no losango) mudam a camada
- * marcada com "Você está aqui" e o cartão ao lado.
+ * Ecossistema em alvo concêntrico: Agência no centro, Escola ao redor e
+ * Comunidade por fora. As abas (ou o clique no alvo) mudam a camada
+ * marcada pelo avatar "Você" e o cartão ao lado.
  *
  * Componente independente: o mesmo arquivo vive em ousadiamarketing.com.br e em
  * creators (comunidade). Só mudam as fotos e os links, passados por props.
@@ -44,7 +44,7 @@ const DADOS: Record<
   agencia: {
     aba: "Sou marca",
     cor: AM,
-    r: 62,
+    r: 0,
     rotulo: "Você está na Agência",
     titulo: "Pra quem precisa vender mais e comunicar melhor.",
     itens: ["Diagnóstico da marca", "Estratégia e campanhas", "Conteúdo e eventos", "Squad de creators da região"],
@@ -81,16 +81,12 @@ const DADOS: Record<
 
 const ORDEM: Camada[] = ["agencia", "escola", "comunidade"];
 
-/** Meia-diagonal de cada losango, de fora pra dentro (viewBox 400, centro 200). */
-const LOSANGOS: { id: Camada; r: number; fundo: string; borda: string }[] = [
-  { id: "comunidade", r: 190, fundo: "#1d4f78", borda: AZ },
-  { id: "escola", r: 135, fundo: "#1f8f5a", borda: VD },
-  { id: "agencia", r: 85, fundo: "#5a3a1c", borda: AM },
+/** Raio de cada anel, de fora pra dentro (viewBox 400, centro 200). */
+const ANEIS: { id: Camada; r: number; fundo: string; nome: string; fonte: number; texto: string }[] = [
+  { id: "comunidade", r: 190, fundo: "#1d4f78", nome: "COMUNIDADE", fonte: 13, texto: "#cfeeff" },
+  { id: "escola", r: 135, fundo: "#1f8f5a", nome: "ESCOLA", fonte: 12, texto: "#10061f" },
+  { id: "agencia", r: 85, fundo: "#53318f", nome: "AGÊNCIA", fonte: 10, texto: AM },
 ];
-
-function pontos(r: number) {
-  return `200,${200 - r} ${200 + r},200 200,${200 + r} ${200 - r},200`;
-}
 
 function Destino({ href, externo, className, children }: { href: string; externo?: boolean; className: string; children: React.ReactNode }) {
   return externo ? (
@@ -129,52 +125,58 @@ export function EcossistemaLosango({ fotos, links, externos = {} }: EcossistemaL
         </p>
 
         <div className="mt-12 grid items-center gap-10 lg:grid-cols-[1fr_minmax(0,28rem)] lg:gap-14">
-          {/* Losango */}
+          {/* Alvo */}
           <svg
             viewBox="0 0 400 400"
             role="img"
-            aria-label="Losango concêntrico: Agência no centro, Escola ao redor e Comunidade por fora"
+            aria-label="Alvo concêntrico: Agência no centro, Escola ao redor e Comunidade por fora. O avatar marca onde você está."
             className="mx-auto h-auto w-full max-w-[26rem] overflow-visible lg:max-w-[30rem]"
           >
-            {LOSANGOS.map((l) => (
-              <polygon
-                key={l.id}
-                points={pontos(l.r)}
-                fill={l.fundo}
-                stroke={ativa === l.id ? "#fff" : "#10061f"}
-                strokeWidth={ativa === l.id ? 4 : 3}
-                strokeLinejoin="round"
+            <defs>
+              {/* Arcos no meio de cada anel (média dos raios), por cima, da esquerda pra direita.
+                  A Agência é um disco inteiro: o arco dela usa 40 como raio interno pra
+                  deixar o centro livre pro avatar. */}
+              {ANEIS.map((a, i) => {
+                const m = (a.r + (ANEIS[i + 1]?.r ?? 40)) / 2;
+                return <path key={a.id} id={`eco-arco-${a.id}`} d={`M ${200 - m} 200 A ${m} ${m} 0 0 1 ${200 + m} 200`} fill="none" />;
+              })}
+            </defs>
+
+            {ANEIS.map((a) => (
+              <circle
+                key={a.id}
+                cx={200}
+                cy={200}
+                r={a.r}
+                fill={a.fundo}
+                stroke={ativa === a.id ? "#fff" : "#10061f"}
+                strokeWidth={ativa === a.id ? 4 : 3}
                 className="cursor-pointer transition-opacity hover:opacity-90"
-                onClick={() => setAtiva(l.id)}
+                onClick={() => setAtiva(a.id)}
               />
             ))}
-            <polygon points={pontos(40)} fill="#0e0620" stroke="#10061f" strokeWidth={3} pointerEvents="none" />
-            <rect x={188} y={188} width={24} height={24} transform="rotate(45 200 200)" fill="none" stroke="#fff" strokeWidth={2.5} pointerEvents="none" />
-            <circle cx={200} cy={200} r={4.5} fill="#fff" pointerEvents="none" />
-
-            <g className="font-mono" fontSize={13} fontWeight={700} letterSpacing={2} pointerEvents="none" fill="#10061f">
-              <text transform="translate(88 118) rotate(-45)" textAnchor="middle" fill="#0b2a44">
-                COMUNIDADE
-              </text>
-              <text transform="translate(122 130) rotate(-45)" textAnchor="middle" fontSize={12}>
-                ESCOLA
-              </text>
-              <text transform="translate(158 140) rotate(-45)" textAnchor="middle" fontSize={9} fill={AM}>
-                AGÊNCIA
-              </text>
+            <g className="font-mono" fontWeight={700} letterSpacing={2} pointerEvents="none">
+              {ANEIS.map((a) => (
+                <text key={a.id} fontSize={a.fonte} fill={a.texto} dominantBaseline="central">
+                  <textPath href={`#eco-arco-${a.id}`} startOffset="50%" textAnchor="middle">
+                    {a.nome}
+                  </textPath>
+                </text>
+              ))}
             </g>
 
-            {/* Marcador "Você está aqui" */}
+            {/* Marcador "Você": avatar no meio da faixa ativa (no centro, quando é a Agência) */}
             <g
               style={{ transform: `translate(${200 + d.r}px, 200px)`, transition: "transform 0.5s cubic-bezier(.4,0,.2,1)" }}
               pointerEvents="none"
             >
-              <circle r={15} fill="#fff" fillOpacity={0.25} />
-              <circle r={9} fill="#fff" stroke="#10061f" strokeWidth={3} />
-              <g transform="translate(-30 -38)">
-                <rect width={92} height={18} rx={4} fill="#10061f" />
-                <text x={46} y={12.5} textAnchor="middle" className="font-mono" fontSize={8.5} fontWeight={700} letterSpacing={0.8} fill="#fff">
-                  VOCÊ ESTÁ AQUI
+              <circle r={17} fill={AM} stroke="#10061f" strokeWidth={3} />
+              <circle cy={-6} r={5} fill="#10061f" />
+              <path d="M -9 10 a 9 8 0 0 1 18 0 z" fill="#10061f" />
+              <g transform="translate(0 -34)">
+                <rect x={-22} y={-10} width={44} height={20} rx={10} fill="#10061f" />
+                <text y={0.5} textAnchor="middle" dominantBaseline="central" className="font-mono" fontSize={9.5} fontWeight={700} letterSpacing={1.5} fill="#fff">
+                  VOCÊ
                 </text>
               </g>
             </g>
